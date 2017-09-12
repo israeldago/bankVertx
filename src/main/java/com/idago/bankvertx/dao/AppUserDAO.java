@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import com.idago.bankvertx.entities.db.AccountDB;
 import com.idago.bankvertx.entities.db.AppUserDB;
+import java.util.List;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 
@@ -22,11 +23,11 @@ import javax.persistence.EntityManager;
  *
  * @author Israel Dago at https://github.com/ivoireNoire
  */
-public class AppUserDBJpaController implements Serializable {
+public class AppUserDAO implements Serializable {
     
     private EntityManager entityManager = null;
     
-    public AppUserDBJpaController(EntityManager em) {
+    public AppUserDAO(EntityManager em) {
         this.entityManager = em;
     }
 
@@ -219,7 +220,7 @@ public class AppUserDBJpaController implements Serializable {
         }
     }
 
-    private Stream<AppUserDB> findAll() {
+    public Stream<AppUserDB> findAll() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
@@ -237,6 +238,20 @@ public class AppUserDBJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }    
+    
+    public AppUserDB findByIdCardNumber(String idCardNumber) {
+        return findOneByNamedQuery("AppUserDB.findByIdentityCardNumber", "identityCardNumber", idCardNumber);
+    }
+
+    public AppUserDB findByUsername(String username) {
+        return findOneByNamedQuery("AppUserDB.findByUsername", "username", username);
     }
     
+    private AppUserDB findOneByNamedQuery(final String NAMED_QUERY, final String PARAM_NAME, final String PARAM_VALUE) {
+        List<AppUserDB> resultList = getEntityManager().createNamedQuery(NAMED_QUERY, AppUserDB.class)
+                .setParameter(PARAM_NAME, PARAM_VALUE)
+                .getResultList();
+        return resultList.isEmpty() ? null : resultList.get(0);
+    }
 }

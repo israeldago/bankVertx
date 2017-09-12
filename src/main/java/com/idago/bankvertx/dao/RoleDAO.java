@@ -13,6 +13,7 @@ import com.idago.bankvertx.entities.db.AppUserDB;
 import com.idago.bankvertx.entities.db.RoleDB;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 
@@ -20,11 +21,11 @@ import javax.persistence.EntityManager;
  *
  * @author Israel Dago at https://github.com/ivoireNoire
  */
-public class RoleDBJpaController implements Serializable {
+public class RoleDAO implements Serializable {
 
     private EntityManager entityManager = null;
     
-    public RoleDBJpaController(EntityManager em) {
+    public RoleDAO(EntityManager em) {
         this.entityManager = em;
     }    
 
@@ -64,7 +65,7 @@ public class RoleDBJpaController implements Serializable {
         }
     }
 
-    public void edit(RoleDB roleDB) throws NonexistentEntityException, Exception {
+    public void edit(RoleDB roleDB) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -140,7 +141,7 @@ public class RoleDBJpaController implements Serializable {
         }
     }
 
-    private Stream<RoleDB> findAll() {
+    public Stream<RoleDB> findAll() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
@@ -159,4 +160,11 @@ public class RoleDBJpaController implements Serializable {
             em.close();
         }
     }    
+    
+    public RoleDB findByRoleName(String roleName) {
+        List<RoleDB> resultList = getEntityManager().createNamedQuery("RoleDB.findByRoleName", RoleDB.class)
+                .setParameter("roleName", roleName)
+                .getResultList();
+        return resultList.isEmpty() ? null : resultList.get(0);
+    }
 }

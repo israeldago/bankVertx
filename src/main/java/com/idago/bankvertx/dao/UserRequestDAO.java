@@ -18,11 +18,11 @@ import javax.persistence.EntityManager;
  *
  * @author Israel Dago at https://github.com/ivoireNoire
  */
-public class UserRequestDBJpaController implements Serializable {
+public class UserRequestDAO implements Serializable {
 
     private EntityManager entityManager = null;
     
-    public UserRequestDBJpaController(EntityManager em) {
+    public UserRequestDAO(EntityManager em) {
         this.entityManager = em;
     }
     
@@ -53,7 +53,7 @@ public class UserRequestDBJpaController implements Serializable {
         }
     }
 
-    public void edit(UserRequestDB userRequestDB) throws NonexistentEntityException, Exception {
+    public void edit(UserRequestDB userRequestDB) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -117,7 +117,7 @@ public class UserRequestDBJpaController implements Serializable {
         }
     }
 
-    private Stream<UserRequestDB> findAll() {
+    public Stream<UserRequestDB> findAll() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
