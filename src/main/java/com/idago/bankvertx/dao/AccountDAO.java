@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import com.idago.bankvertx.entities.db.AppUserDB;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -20,14 +21,14 @@ import javax.persistence.EntityManager;
  */
 public class AccountDAO implements Serializable {
 
-    private EntityManager entityManager = null;
+    private EntityManagerFactory emf = null;
 
-    public AccountDAO(EntityManager em) {
-        this.entityManager = em;
+    public AccountDAO(EntityManagerFactory emf) {
+        this.emf = emf;
     }
     
     public EntityManager getEntityManager() {
-        return this.entityManager;
+        return this.emf.createEntityManager();
     }
 
     public void create(AccountDB accountDB) {

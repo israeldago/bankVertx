@@ -5,7 +5,6 @@
  */
 package com.idago.bankvertx.rest;
 
-
 import com.idago.bankvertx.entities.dto.AccountDTO;
 import com.idago.bankvertx.entities.dto.AppUserDTO;
 import com.idago.bankvertx.entities.dto.ResponseDTO;
@@ -29,7 +28,6 @@ import io.vertx.rx.java.ObservableFuture;
 import io.vertx.rx.java.RxHelper;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
-
 
 /**
  *
@@ -125,7 +123,8 @@ public class RestApi extends AbstractVerticle {
     }
 
     private void allAccountsCall(RoutingContext ctx) {
-    List<JsonObject> allAccounts = accountService.allAccounts()
+        logger.info("allAccountsCall from DeploymentID " + this.deploymentID());
+        List<JsonObject> allAccounts = accountService.allAccounts()
                 .map(JsonObject::mapFrom)
                 .map(jsObj -> jsObj.put("self", ctx.request().absoluteURI() + jsObj.getInteger("id")))
                 .collect(toList());
@@ -134,7 +133,7 @@ public class RestApi extends AbstractVerticle {
                 .setStatusCode(allAccounts.isEmpty() ? 204 : 200)
                 .end(Json.encodePrettily(allAccounts));
     }
-    
+
     private void createAccountCall(RoutingContext ctx) {
         String accountToCreateAsString = ctx.getBodyAsString();
         AccountDTO accountDTO = Json.decodeValue(accountToCreateAsString, AccountDTO.class);

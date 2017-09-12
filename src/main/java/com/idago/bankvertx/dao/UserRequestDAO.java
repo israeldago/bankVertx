@@ -13,6 +13,7 @@ import com.idago.bankvertx.entities.db.AppUserDB;
 import com.idago.bankvertx.entities.db.UserRequestDB;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -20,14 +21,14 @@ import javax.persistence.EntityManager;
  */
 public class UserRequestDAO implements Serializable {
 
-    private EntityManager entityManager = null;
-    
-    public UserRequestDAO(EntityManager em) {
-        this.entityManager = em;
+   private EntityManagerFactory emf = null;
+
+    public UserRequestDAO(EntityManagerFactory emf) {
+        this.emf = emf;
     }
     
     public EntityManager getEntityManager() {
-        return this.entityManager;
+        return this.emf.createEntityManager();
     }
 
     public void create(UserRequestDB userRequestDB) {

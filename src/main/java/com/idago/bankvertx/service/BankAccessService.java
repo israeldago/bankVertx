@@ -15,7 +15,6 @@ import com.idago.bankvertx.entities.dto.RoleDTO;
 import com.idago.bankvertx.service.gateway.AccessService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -30,9 +29,8 @@ public class BankAccessService implements AccessService<AppUserDTO> {
 
     public BankAccessService() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.idago_bankVertx_jar_1.0-SNAPSHOTPU");
-        EntityManager entityManager = emf.createEntityManager();
-        this.userDAO = new AppUserDAO(entityManager);
-        this.roleDAO = new RoleDAO(entityManager);
+        this.userDAO = new AppUserDAO(emf);
+        this.roleDAO = new RoleDAO(emf);
     }
 
     @Override

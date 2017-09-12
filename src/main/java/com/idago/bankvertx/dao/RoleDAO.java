@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -23,14 +24,14 @@ import javax.persistence.EntityManager;
  */
 public class RoleDAO implements Serializable {
 
-    private EntityManager entityManager = null;
-    
-    public RoleDAO(EntityManager em) {
-        this.entityManager = em;
-    }    
+    private EntityManagerFactory emf = null;
 
+    public RoleDAO(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+    
     public EntityManager getEntityManager() {
-        return this.entityManager;
+        return this.emf.createEntityManager();
     }
 
     public void create(RoleDB roleDB) {

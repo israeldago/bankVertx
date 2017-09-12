@@ -22,10 +22,7 @@ import com.idago.bankvertx.service.gateway.AccountService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -41,9 +38,8 @@ public class BankAccountService implements AccountService {
 
     public BankAccountService() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.idago_bankVertx_jar_1.0-SNAPSHOTPU");
-        EntityManager entityManager = emf.createEntityManager();
-        this.accountDAO = new AccountDAO(entityManager);
-        this.appUserDAO = new AppUserDAO(entityManager);
+        this.accountDAO = new AccountDAO(emf);
+        this.appUserDAO = new AppUserDAO(emf);
         this.random = new Random();
     }
 

@@ -7,7 +7,7 @@
     <class>com.idago.bankvertx.entities.db.UserRequestDB</class>
     <class>com.idago.bankvertx.entities.db.RoleDB</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Banca_v1?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Banca_v1?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="bancaDBUser"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="12345"/>
