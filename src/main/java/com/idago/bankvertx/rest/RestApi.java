@@ -24,6 +24,7 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.rx.java.ObservableFuture;
 import io.vertx.rx.java.RxHelper;
 import java.util.List;
@@ -56,7 +57,7 @@ public class RestApi extends AbstractVerticle {
         router.route().handler(BodyHandler.create());
 
         ///create the endpoints
-        //router.get("/").handler(routingCtx -> routingCtx.reroute("/todefine")); TODO -> reroute or serve a 404 PAGE ??
+        router.get("/").handler(StaticHandler.create("static").setIndexPage("404.html"));
         router.post("/register").handler(this::registerCall);
         router.get("/authentificate/:username/:password").handler(this::loginCall);
         router.get("/accounts").handler(this::allAccountsCall);
@@ -169,7 +170,7 @@ public class RestApi extends AbstractVerticle {
                             .setStatusCode(500)
                             .end(responseFromService.getMessage());
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 logger.error("Parameter received as ID for deleting account is not a valid Number -> ", e.getMessage());
                 ctx.response()
                         .putHeader("Content-type", "text/plain : charset=utf-8")
@@ -201,5 +202,4 @@ public class RestApi extends AbstractVerticle {
                     .end(responseFromService.getMessage());
         }
     }
-
 }

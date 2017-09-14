@@ -17,7 +17,7 @@ What you need to have configured on your machine
 
 In *Mysql CLI* or *phpMyAdmin*, you'll have just to create a database named ```Banca_v1``` and configure for this database one user with a password.
 Fyi, the app uses, (`bancaDBUser` - `12345`), but you can use a different user & pwd.
-If so, DO NOT FORGET to reconfigure the [persistence.xml](./src/main/resources/META-INF/persistence.xml) for DB connection.
+If so, DO NOT FORGET to reconfigure the [persistence.xml](./src/main/resources/META-INF/persistence.xml) for DB connection. You can also change to generation strategy for the DB there.
 
 
 
@@ -35,7 +35,20 @@ Now, you will have to run the next command to get running the app by creating an
 ```
 $ java -jar target/bankVertx-1.0-SNAPSHOT-fat.jar
 ```
+#### The Supported Urls
+
+``POST`` : */register*
+
+``GET`` : */authentificate/:username/:password*
+
+``GET`` : */accounts*
+
+``POST`` : */accounts*
+
+``DELETE`` : */accounts/:id*
+
+``POST`` : */transactions*
 
 ## License
 
-This project is licensed under the MIT License - see the [license.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [license.md](license.md) file for details

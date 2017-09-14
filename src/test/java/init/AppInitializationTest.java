@@ -31,7 +31,7 @@ public class AppInitializationTest extends AbstractVerticle {
         this.vertx = Vertx.vertx(); 
         this.vertx.createHttpServer()
                 .requestHandler(req -> req.response().end("welcome ivoireNoire"))
-                .listen(8080, context.asyncAssertSuccess());
+                .listen(8088, context.asyncAssertSuccess());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class AppInitializationTest extends AbstractVerticle {
         // Send a request for getting the response from the http server
         HttpClient client = this.vertx.createHttpClient();
         Async async = context.async();
-        client.getNow(8080, "localhost", "/", resp -> {
+        client.getNow(8088, "localhost", "/", resp -> {
             resp.bodyHandler(body -> {
                 context.assertEquals("welcome ivoireNoire", body.toString());
                 client.close();
