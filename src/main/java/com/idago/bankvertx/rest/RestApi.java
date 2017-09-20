@@ -15,6 +15,7 @@ import com.idago.bankvertx.service.gateway.AccessService;
 import com.idago.bankvertx.service.gateway.AccountService;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.Json;
@@ -24,6 +25,7 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.rx.java.ObservableFuture;
 import io.vertx.rx.java.RxHelper;
@@ -53,6 +55,20 @@ public class RestApi extends AbstractVerticle {
         ///creeate a router
         Router router = Router.router(appVertx);
 
+        //Enable CORS for all IP addresses with custom headers and methods
+        router.route().handler(CorsHandler.create("*")
+                        .allowedMethod(HttpMethod.GET)
+                        .allowedMethod(HttpMethod.POST)
+                        .allowedMethod(HttpMethod.PUT)
+                        .allowedMethod(HttpMethod.DELETE)
+                        .allowedMethod(HttpMethod.OPTIONS)
+                        .allowedMethod(HttpMethod.CONNECT)
+                        .allowedMethod(HttpMethod.OTHER)
+                        .allowedHeader("Origin")
+                        .allowedHeader("X-Requested-With")
+                        .allowedHeader("Content-Type")
+                        .allowedHeader("Accept"));
+        
         ///Allow the router to retrieve the body of any request made
         router.route().handler(BodyHandler.create());
 

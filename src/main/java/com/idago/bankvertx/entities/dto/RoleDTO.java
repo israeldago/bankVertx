@@ -13,6 +13,8 @@ public class RoleDTO implements java.io.Serializable{
     private Integer id;
     private String roleName;
 
+    public RoleDTO() {}
+    
     public RoleDTO(String roleName) {
         this.roleName = roleName;
     }
